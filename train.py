@@ -145,9 +145,9 @@ with tf.Graph().as_default():
 
         logging.info('start embeding.......')
         logging.info("memory usage percent: %.2f%%" % (p1.memory_percent()))
-        node_embed_file = open('node_embed_' + str(config.num_epoch) + '_' + str(config.embed_size) + '.txt', 'wb')
+        node_embed_file = open('node_embed_' + str(config.num_epoch) + '_' + str(config.embed_size) + '.txt', 'w')
         song_text_embed_file = open('song_text_embed_' + str(config.num_epoch) + '_' + str(config.embed_size) + '.txt',
-                                    'wb')
+                                    'w')
 
         all_batches = data.generate_all_batches(mode='add')
         song_batches = data.generate_song_batches(mode='add')
@@ -214,7 +214,7 @@ with tf.Graph().as_default():
 
             convA, convB, NA, NB = sess.run([model.convA, model.convB, model.N_A, model.N_B], feed_dict=feed_dict)
 
-            for data_index in range(config.all_batch_size):
+            for data_index in range(int(config.all_batch_size)):
                 temp_all_weight = all_weight[data_index]
                 em = NA[data_index]
                 node_embed[node1[data_index]] = node_embed[node1[data_index]] + em * temp_all_weight
@@ -222,7 +222,7 @@ with tf.Graph().as_default():
                 em = NB[data_index]
                 node_embed[node2[data_index]] = node_embed[node2[data_index]] + em * temp_all_weight
                 node_weight_sum[node2[data_index]] += temp_all_weight
-            for data_index in range(config.song_batch_size):
+            for data_index in range(int(config.song_batch_size)):
                 temp_song_weight = song_weight[data_index]
                 em = convA[data_index]
                 song_text_embed[text_node1[data_index]] = song_text_embed[
@@ -235,7 +235,7 @@ with tf.Graph().as_default():
 
         logging.info('start writing embeding.......')
         logging.info("memory usage percent: %.2f%%" % (p1.memory_percent()))
-        for node_index in range(data.num_all_nodes):
+        for node_index in range(int(data.num_all_nodes)):
             if node_weight_sum[node_index]:
                 tmp = node_embed[node_index] / node_weight_sum[node_index]
                 node_embed_file.write(' '.join(map(lambda x: format(x, ".6f"), tmp)) + '\n')
@@ -243,7 +243,7 @@ with tf.Graph().as_default():
                 node_embed_file.write('\n')
         node_embed_file.close()
 
-        for node_index in range(data.num_song_nodes):
+        for node_index in range(int(data.num_song_nodes)):
             if song_text_weight_sum[node_index]:
                 tmp = song_text_embed[node_index] / song_text_weight_sum[node_index]
                 song_text_embed_file.write(' '.join(map(lambda x: format(x, ".6f"), tmp)) + '\n')

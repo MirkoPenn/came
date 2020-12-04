@@ -80,7 +80,7 @@ class dataSet:
                 break
             else:
                 word_index_dict[x] = len(word_index_dict)
-#a
+
         text = np.zeros((len(text_file), config.MAX_LEN), dtype='int32')
         for i in range(len(text_file)):
             words = text_file[i].strip().split(" ")
@@ -141,15 +141,15 @@ class dataSet:
         edges = self.all_edges
         if mode == 'add':
             all_num_batch += 1
-            edges.extend(edges[:(config.all_batch_size - len(self.all_edges) % config.all_batch_size)])
+            edges.extend(edges[:int(config.all_batch_size - len(self.all_edges) % config.all_batch_size)])
         if mode != 'add':
             random.shuffle(edges)
-        sample_edges = edges[:all_num_batch * config.all_batch_size]
+        sample_edges = edges[:int(all_num_batch * config.all_batch_size)]
         sample_edges = self.negative_sample(sample_edges, self.all_negative_table, self.all_exist_node1_node2set_dict)
 
         batches = []
-        for i in range(all_num_batch):
-            batches.append(sample_edges[i * config.all_batch_size:(i + 1) * config.all_batch_size])
+        for i in range(int(all_num_batch)):
+            batches.append(sample_edges[int(i * config.all_batch_size):int((i + 1) * config.all_batch_size)])
         return batches
 
     def generate_song_batches(self, mode=None):
@@ -158,15 +158,15 @@ class dataSet:
         edges = self.song_edges
         if mode == 'add':
             song_num_batch += 1
-            edges.extend(edges[:(config.song_batch_size - len(self.song_edges) % config.song_batch_size)])
+            edges.extend(edges[:int(config.song_batch_size - len(self.song_edges) % config.song_batch_size)])
         if mode != 'add':
             random.shuffle(edges)
-        sample_edges = edges[:song_num_batch * config.song_batch_size]
+        sample_edges = edges[:int(song_num_batch*config.song_batch_size)]
         sample_edges = self.negative_sample(sample_edges, self.song_negative_table, self.song_exist_node1_node2set_dict)
 
         batches = []
-        for i in range(song_num_batch):
-            batches.append(sample_edges[i * config.song_batch_size:(i + 1) * config.song_batch_size])
+        for i in range(int(song_num_batch)):
+            batches.append(sample_edges[int(i * config.song_batch_size):int((i + 1) * config.song_batch_size)])
         return batches
 
     def get_exist_node1_node2set_dict(self, edges):
