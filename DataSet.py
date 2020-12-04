@@ -80,7 +80,7 @@ class dataSet:
                 break
             else:
                 word_index_dict[x] = len(word_index_dict)
-
+#a
         text = np.zeros((len(text_file), config.MAX_LEN), dtype='int32')
         for i in range(len(text_file)):
             words = text_file[i].strip().split(" ")
