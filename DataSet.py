@@ -73,7 +73,7 @@ class dataSet:
                 else:
                     word_freq_dict[word] = 1
         del word_freq_dict['']
-        sorted_word_freq_dict = dict(sorted(word_freq_dict.items(), key=lambda item: item[1]), reversed=True)
+        sorted_word_freq_dict = dict(sorted(word_freq_dict.items(), key=lambda item: item[1]))
         word_index_dict = {"<UNK>": 0}
         for x in sorted_word_freq_dict:
             if sorted_word_freq_dict[x] == 1:
