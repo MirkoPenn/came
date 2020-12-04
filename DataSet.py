@@ -73,7 +73,7 @@ class dataSet:
                 else:
                     word_freq_dict[word] = 1
         del word_freq_dict['']
-        sorted_word_freq_dict = dict(sorted(word_freq_dict.items(), key=lambda item: item[1]))
+        sorted_word_freq_dict = dict(sorted(word_freq_dict.items(), key=lambda item: item[1], reverse=True))
         word_index_dict = {"<UNK>": 0}
         for x in sorted_word_freq_dict:
             if sorted_word_freq_dict[x] == 1:
@@ -106,8 +106,8 @@ class dataSet:
             sample_upper_bound = self.num_all_nodes
             if node2[i] < self.num_song_nodes:  # 2nd node is song
                 sample_upper_bound = self.num_song_nodes
-            elif node2[i] >= self.num_song_nodes + 4284:  # 2nd node is session
-                sample_lower_bound = self.num_song_nodes + 4284
+            elif node2[i] >= self.num_song_nodes + 15981:  # 2nd node is session
+                sample_lower_bound = self.num_song_nodes + 15981
             neg_node = []
             for j in range(3):
                 temp_neg_node = func()
