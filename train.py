@@ -128,9 +128,8 @@ with tf.Graph().as_default():
                 text_norm_loss_epoch += text_norm_loss_batch
                 node_norm_loss_epoch += node_norm_loss_batch
                 matrix_norm_loss_epoch += matrix_norm_loss_batch
-                if batch_index % (num_batch / 5) == 0:
-                    logging.info('batch num: {} of {}, progress: {}'.format(batch_index, num_batch, (
-                            1.0 * batch_index / num_batch)))
+                logging.info('batch num: {} of {}, progress: {}'.format(batch_index, num_batch, (1.0 * batch_index / num_batch)))
+
             logging.info('epoch is: {}, and loss is: {}'.format(epoch + 1, loss_epoch))
             logging.info('epoch is: {}, and conv_loss is: {}'.format(epoch + 1, conv_loss_epoch))
             logging.info('epoch is: {}, and structure_loss is: {}'.format(epoch + 1, structure_loss_epoch))
