@@ -12,9 +12,9 @@ FORMAT = "%(asctime)s - %(message)s"
 logging.basicConfig(level=logging.INFO)
 
 # load data
-all_graph_path = 'all_graph.txt'
-song_graph_path = 'song_graph.txt'
-text_path = 'data_all.txt'
+all_graph_path = 'all_graph_mini.txt'
+song_graph_path = 'song_graph_mini.txt'
+text_path = 'data_all_mini.txt'
 
 logging.info('start reading data.......')
 data = dataSet(text_path, all_graph_path, song_graph_path)
