@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import tensorflow as tf
 import config
+import logging
 
 
 class Model:
     def __init__(self, vocab_size, num_all_nodes):
         with tf.name_scope('read_inputs') as scope:
+            logging.info('read_inputs')
             self.all_batch_size = tf.placeholder(tf.int32)
             self.song_batch_size = tf.placeholder(tf.int32)
             self.Text_a = tf.placeholder(tf.int32, [None, config.MAX_LEN], name='Ta')
@@ -31,6 +33,7 @@ class Model:
             self.num_batch = tf.placeholder(tf.float32)
 
         with tf.name_scope('initialize_embedding') as scope:  # text和node的embedding各占一部分
+            logging.info('initialize_embedding')
             self.text_embed = tf.Variable(tf.truncated_normal([vocab_size, config.text_embed_size], stddev=0.5))
             self.node_embed = tf.Variable(tf.truncated_normal([num_all_nodes, config.structure_embed_size], stddev=0.5))
             self.harmonious_text_structure_embedding_matrix = tf.Variable(
@@ -39,6 +42,8 @@ class Model:
                 tf.truncated_normal([config.structure_embed_size, config.text_embed_size], stddev=0.5))
 
         with tf.name_scope('lookup_embeddings') as scope:
+            logging.info('lookup_embeddings')
+
             self.TA = tf.nn.embedding_lookup(self.text_embed, self.Text_a)
             self.T_A = tf.expand_dims(self.TA, -1)
 
@@ -85,6 +90,8 @@ class Model:
                     + self.norm_loss
 
     def conv(self):
+        logging.info('conv')
+
         window_size = 3
         W2 = tf.Variable(tf.truncated_normal([window_size, config.text_embed_size, 1, config.text_embed_size], stddev=0.3))
 
@@ -167,6 +174,8 @@ class Model:
         return attA, attB, attNEGA, attNEGB, attNEGC
 
     def compute_conv_loss(self):
+        logging.info('compute_conv_loss')
+
         p1 = tf.reduce_sum(tf.multiply(self.convA, self.convB), 1)
         p1 = tf.log(tf.sigmoid(p1) + 0.0001)
 
@@ -194,6 +203,7 @@ class Model:
         return loss
 
     def compute_structure_loss(self):
+        logging.info('compute_structure_loss')
         p1 = tf.reduce_sum(tf.multiply(self.N_A, self.N_B), 1)
         p1 = tf.log(tf.sigmoid(p1) + 0.0001)
 

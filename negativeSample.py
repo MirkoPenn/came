@@ -4,6 +4,9 @@ from config import neg_table_size, NEG_SAMPLE_POWER
 import logging
 
 def InitNegTable(edges):
+
+    logging.info('InitNegTable')
+
     a_list, b_list, weight_list = zip(*edges)
     a_list = list(a_list)
     b_list = list(b_list)

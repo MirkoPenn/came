@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 MAX_LEN = 50
-neg_table_size = 100000000
+neg_table_size = 10000000
 NEG_SAMPLE_POWER = 0.75
 init_batch_size = 512 # set your batch size
 all_batch_size = init_batch_size
