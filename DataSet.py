@@ -50,6 +50,8 @@ class dataSet:
             # self.num_all_nodes = true_all_node_manually
 
     def load(self, text_path, all_graph_path, song_graph_path):
+        logging.info('load')
+
         text_file = open(text_path, 'r').readlines()
         all_graph_file = open(all_graph_path, 'r').readlines()
         song_graph_file = open(song_graph_path, 'r').readlines()
@@ -57,6 +59,8 @@ class dataSet:
         return text_file, all_graph_file, song_graph_file
 
     def load_edges(self, graph_file):
+        logging.info('load_edges')
+
         edges = []
         for i in graph_file:
             edge = i.strip().split(',')
@@ -64,6 +68,8 @@ class dataSet:
         return edges  # node1 node2 weight
 
     def load_text(self, text_file):
+        logging.info('load_text')
+
         word_freq_dict = {}
         for line in text_file:
             words = line.strip().split(" ")
@@ -98,6 +104,7 @@ class dataSet:
         return text, num_vocab, num_song_nodes
 
     def negative_sample(self, edges, negative_table, exist_node1_node2set_dict):
+        logging.info('negative_sample')
         node1, node2, weight = zip(*edges)
         sample_edges = []
         func = lambda: negative_table[random.randint(0, config.neg_table_size - 1)]
@@ -121,6 +128,8 @@ class dataSet:
         return sample_edges
 
     def negative_sample_old(self, edges, negative_table, exist_node1_node2set_dict):
+        logging.info('negative_sample_old')
+
         node1, node2, weight = zip(*edges)
 
         sample_edges = []
@@ -137,6 +146,8 @@ class dataSet:
         return sample_edges
 
     def generate_all_batches(self, mode=None):
+        logging.info('generate_all_batches')
+
         all_num_batch = len(self.all_edges) // config.all_batch_size
         edges = self.all_edges
         if mode == 'add':
@@ -153,6 +164,7 @@ class dataSet:
         return batches
 
     def generate_song_batches(self, mode=None):
+        logging.info('generate_song_batches')
 
         song_num_batch = len(self.song_edges) // config.song_batch_size
         edges = self.song_edges
@@ -170,6 +182,7 @@ class dataSet:
         return batches
 
     def get_exist_node1_node2set_dict(self, edges):
+        logging.info('get_exist_node1_node2set_dict')
 
         temp_node_set = set()
         node1, node2, weight = zip(*edges)

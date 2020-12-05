@@ -53,7 +53,9 @@ with tf.Graph().as_default():
                 config.song_batch_size += config.init_batch_size / 2
                 logging.info('config.batch_size changes to : {}'.format(config.all_batch_size))
 
+            logging.info('loading all_batches')
             all_batches = data.generate_all_batches()
+            logging.info('loading song_batches')
             song_batches = data.generate_song_batches()
             all_num_batch = len(all_batches)
             song_num_batch = len(song_batches)
