@@ -2,7 +2,7 @@
 MAX_LEN = 50
 neg_table_size = 10000000
 NEG_SAMPLE_POWER = 0.75
-init_batch_size = 128 # set your batch size
+init_batch_size = 512 # set your batch size
 all_batch_size = init_batch_size
 song_batch_size = all_batch_size // 2
 num_epoch = 50

@@ -8,6 +8,7 @@ import logging
 import psutil
 import random
 
+return
 FORMAT = "%(asctime)s - %(message)s"
 logging.basicConfig(level=logging.INFO)
 
